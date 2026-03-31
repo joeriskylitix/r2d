@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSI Travel Request Form</title>
+    <style>
+        :root {
+            --color-primary: #0078d4;
+            --color-primary-hover: #106ebe;
+            --color-background: #faf9f8;
+            --color-surface: #ffffff;
+            --color-text: #323130;
+            --color-text-secondary: #605e5c;
+            --color-border: #edebe9;
+            --color-error: #a4262c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            padding: 20px;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--color-surface);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 32px;
+        }
+
+        .header {
+            border-bottom: 3px solid var(--color-primary);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            color: var(--color-primary);
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .form-meta {
+            color: var(--color-text-secondary);
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        .subtitle {
+            color: var(--color-text-secondary);
+            font-size: 13px;
+        }
+
+        .section-header {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-top: 32px;
+            margin-bottom: 14px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--color-text);
+            font-size: 13px;
+        }
+
+        .required {
+            color: var(--color-error);
+            margin-left: 2px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: inherit;
+            background-color: var(--color-surface);
+            color: var(--color-text);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 1px var(--color-primary);
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23605e5c' d='M2 4l4 4 4-4z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            padding-right: 32px;
+        }
+
+        textarea {
+            min-height: 70px;
+            resize: vertical;
+        }
+
+        .checkbox-group {
+            margin-top: 6px;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        input[type="checkbox"],
+        input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: var(--color-primary);
+            flex-shrink: 0;
+        }
+
+        .checkbox-wrapper label {
+            margin-bottom: 0;
+            font-weight: 400;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .helper-text {
+            font-size: 11px;
+            color: var(--color-text-secondary);
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+            padding-top: 20px;
+            border-top: 2px solid var(--color-border);
+        }
+
+        button {
+            padding: 11px 22px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            font-family: inherit;
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-primary-hover);
+        }
+
+        .btn-secondary {
+            background-color: var(--color-border);
+            color: var(--color-text);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e1dfdd;
+        }
+
+        .error-message {
+            color: var(--color-error);
+            font-size: 11px;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .success-message {
+            background-color: #dff6dd;
+            border: 1px solid #0b6a0b;
+            color: #0b6a0b;
+            padding: 14px;
+            border-radius: 4px;
+            margin-bottom: 18px;
+            display: none;
+            font-size: 13px;
+        }
+
+        .subsection {
+            margin-left: 20px;
+            margin-top: 12px;
+            padding-left: 16px;
+            border-left: 3px solid var(--color-border);
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 20px;
+            }
+
+            .form-row {
+                flex-direction: column;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+
+        /* 
+        ===========================================
+        EDIT DROPDOWN OPTIONS BELOW
+        ===========================================
+        
+        Manager/Supervisor Names: Find <select id="managerName">
+        Senior Management Names: Find <select id="seniorMgmtName">
+        EPT Representative Names: Find <select id="eptRepName">
+        Duration Days: Find <select id="durationDays">
+        Risk Levels: Find <select id="riskLevel">
+        */
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Marking Services Inc. (MSI) – Travel Request Form</h1>
+        <div class="form-meta">Effective Date: 16 March 2026 | Form Version: 1.0</div>
+        <p class="subtitle">Complete all sections for business travel requests. Required fields marked with *</p>
+    </div>
+
+    <div class="success-message" id="successMessage">
+        Your travel request has been prepared successfully!
+    </div>
+
+    <form id="travelForm">
+        <!-- EMPLOYEE INFORMATION -->
+        <div class="section-header">Employee Information</div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="employeeName">Employee Name</label>
+                <input type="text" id="employeeName" name="employeeName">
+                <div class="error-message">Please enter your name</div>
+            </div>
+            <div class="form-group">
+                <label for="employeeId">Employee ID/Number</label>
+                <input type="text" id="employeeId" name="employeeId">
+                <div class="error-message">Please enter your employee ID</div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="department">Department/Team</label>
+                <input type="text" id="department" name="department">
+                <div class="error-message">Please enter your department</div>
+            </div>
+            <div class="form-group">
+                <label for="title">Position/Title</label>
+                <input type="text" id="title" name="title">
+                <div class="error-message">Please enter your title</div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="managerName">Manager/Supervisor Name</label>
+                <select id="managerName" name="managerName">
+                    <option value="">Select Manager</option>
+                    <option value="Manager 1">Manager 1</option>
+                    <option value="Manager 2">Manager 2</option>
+                    <option value="Manager 3">Manager 3</option>
+                    <option value="Manager 4">Manager 4</option>
+                    <option value="Manager 5">Manager 5</option>
+                </select>
+                <div class="error-message">Please select your manager</div>
+            </div>
+            <div class="form-group">
+                <label for="officePhone">Contact Company/Office Phone</label>
+                <input type="tel" id="officePhone" name="officePhone">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="mobilePhone">Contact Mobile Phone</label>
+                <input type="tel" id="mobilePhone" name="mobilePhone">
+            </div>
+            <div class="form-group">
+                <label for="msiEmail">Contact MSI Email</label>
+                <input type="email" id="msiEmail" name="msiEmail">
+                <div class="error-message">Please enter a valid email</div>
+            </div>
+        </div>
+
+        <!-- TRAVEL DETAILS -->
+        <div class="section-header">Travel Details</div>
+
+        <div class="form-group">
+            <label>Type of Travel</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="travelDomestic" name="travelType" value="Domestic">
+                    <label for="travelDomestic">Domestic</label>
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="travelInternational" name="travelType" value="International">
+                    <label for="travelInternational">International</label>
+                </div>
+            </div>
+            <div class="error-message" data-error-for="travelType">Please select travel type</div>
+        </div>
+
+        <div class="form-group">
+            <label for="destination">Destination(s) (City, State/Country)</label>
+            <input type="text" id="destination" name="destination">
+            <div class="error-message">Please enter a destination</div>
+        </div>
+
+        <div class="form-group">
+            <label for="purpose">Purpose of Travel</label>
+            <textarea id="purpose" name="purpose" placeholder="e.g., project installation, client meeting, site survey, training"></textarea>
+            <div class="helper-text">Describe the business purpose of this trip</div>
+            <div class="error-message">Please describe the purpose</div>
+        </div>
+
+        <div class="form-group">
+            <label>Traveling with Co-Worker(s)?</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="withCoworkersYes" name="withCoworkers" value="Yes">
+                    <label for="withCoworkersYes">Yes</label>
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="withCoworkersNo" name="withCoworkers" value="No">
+                    <label for="withCoworkersNo">No</label>
+                </div>
+            </div>
+            <div class="error-message" data-error-for="withCoworkers">Please indicate if traveling with co-workers</div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="coworkerNames">Name of Co-Worker(s) (if applicable)</label>
+                <input type="text" id="coworkerNames" name="coworkerNames">
+            </div>
+            <div class="form-group">
+                <label for="clientName">Client's Name (if applicable)</label>
+                <input type="text" id="clientName" name="clientName">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="projectName">Project Name (if applicable)</label>
+            <input type="text" id="projectName" name="projectName">
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="departureDate">Departure Date</label>
+                <input type="date" id="departureDate" name="departureDate">
+                <div class="error-message">Please select departure date</div>
+            </div>
+            <div class="form-group">
+                <label for="returnDate">Return Date</label>
+                <input type="date" id="returnDate" name="returnDate">
+                <div class="error-message">Please select return date</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="durationDays">Total Estimated Duration (days)</label>
+            <select id="durationDays" name="durationDays">
+                <option value="">Select duration</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11-15">11-15</option>
+                <option value="16-20">16-20</option>
+                <option value="21-30">21-30</option>
+                <option value="31-60">31-60</option>
+            </select>
+            <div class="error-message">Please select duration</div>
+        </div>
+
+        <div class="form-group">
+            <label for="itinerarySummary">Itinerary Summary</label>
+            <textarea id="itinerarySummary" name="itinerarySummary" placeholder="Include flights, accommodations, key meetings/sites, transportation"></textarea>
+            <div class="helper-text">Attach detailed itinerary as separate document if needed</div>
+        </div>
+
+        <!-- ESTIMATED COSTS -->
+        <div class="section-header">Estimated Costs</div>
+        <div class="helper-text" style="margin-bottom: 16px;">For budgeting/approval reference; detailed expense report to follow post-travel</div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="costAirfare">Airfare/Transportation (USD)</label>
+                <input type="number" id="costAirfare" name="costAirfare" min="0" step="0.01" placeholder="0.00">
+            </div>
+            <div class="form-group">
+                <label for="costLodging">Lodging (USD)</label>
+                <input type="number" id="costLodging" name="costLodging" min="0" step="0.01" placeholder="0.00">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="costMeals">Meals/Per Diem (USD)</label>
+                <input type="number" id="costMeals" name="costMeals" min="0" step="0.01" placeholder="0.00">
+            </div>
+            <div class="form-group">
+                <label for="costOther">Other (visa, insurance, etc.) (USD)</label>
+                <input type="number" id="costOther" name="costOther" min="0" step="0.01" placeholder="0.00">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="costTotal">Total Estimated (USD)</label>
+            <input type="number" id="costTotal" name="costTotal" min="0" step="0.01" placeholder="0.00">
+        </div>
+
+        <!-- 1. TRAVEL APPROVAL REQUIREMENTS -->
+        <div class="section-header">1. Travel Approval Requirements</div>
+
+        <div class="form-group">
+            <label>Request submitted at least:</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="advance4weeks" name="advanceNotice" value="4 weeks (International)">
+                    <label for="advance4weeks">4 weeks in advance (International)</label>
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="advance2weeks" name="advanceNotice" value="2 weeks (Domestic)">
+                    <label for="advance2weeks">2 weeks in advance (Domestic)</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Is this travel to a risk level 3, 4, or 5 (Medium, High, or Critical) destination (per Regional Risk Table, Appendix 1)?</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="highRiskYes" name="highRisk" value="Yes">
+                    <label for="highRiskYes">Yes</label>
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="highRiskNo" name="highRisk" value="No">
+                    <label for="highRiskNo">No</label>
+                </div>
+            </div>
+            <div class="helper-text">If Yes, EPT pre-approval required. Senior management approval required for risk level 4 (High)</div>
+        </div>
+
+        <div class="subsection">
+            <h3 style="font-size: 15px; margin-bottom: 10px; color: var(--color-text);">Manager/Supervisor Approval</h3>
+            <p style="font-size: 12px; color: var(--color-text-secondary); margin-bottom: 12px;">I have reviewed the purpose, itinerary, and necessity of this travel.</p>
+
+            <div class="form-group">
+                <label>Approved</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-wrapper">
+                        <input type="radio" id="mgrApprovedYes" name="managerApproval" value="Yes">
+                        <label for="mgrApprovedYes">Yes</label>
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <input type="radio" id="mgrApprovedNo" name="managerApproval" value="No">
+                        <label for="mgrApprovedNo">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="managerComments">Comments</label>
+                <textarea id="managerComments" name="managerComments"></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="managerSignature">Manager/Supervisor Signature</label>
+                    <input type="text" id="managerSignature" name="managerSignature" placeholder="Type name to sign">
+                </div>
+                <div class="form-group">
+                    <label for="managerApprovalDate">Date</label>
+                    <input type="date" id="managerApprovalDate" name="managerApprovalDate">
+                </div>
+            </div>
+        </div>
+
+        <div class="subsection">
+            <h3 style="font-size: 15px; margin-bottom: 10px; color: var(--color-text);">Senior Management Approval (if risk level 4/High)</h3>
+
+            <div class="form-group">
+                <label>Approved</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-wrapper">
+                        <input type="radio" id="seniorApprovedYes" name="seniorApproval" value="Yes">
+                        <label for="seniorApprovedYes">Yes</label>
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <input type="radio" id="seniorApprovedNo" name="seniorApproval" value="No">
+                        <label for="seniorApprovedNo">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="seniorComments">Comments</label>
+                <textarea id="seniorComments" name="seniorComments"></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="seniorMgmtName">Senior Management Name</label>
+                    <select id="seniorMgmtName" name="seniorMgmtName">
+                        <option value="">Select (if applicable)</option>
+                        <option value="Senior Manager 1">Senior Manager 1</option>
+                        <option value="Senior Manager 2">Senior Manager 2</option>
+                        <option value="Senior Manager 3">Senior Manager 3</option>
+                        <option value="Senior Manager 4">Senior Manager 4</option>
+                        <option value="Senior Manager 5">Senior Manager 5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="seniorSignature">Senior Management Signature</label>
+                    <input type="text" id="seniorSignature" name="seniorSignature" placeholder="Type name to sign">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="seniorApprovalDate">Date</label>
+                <input type="date" id="seniorApprovalDate" name="seniorApprovalDate">
+            </div>
+        </div>
+
+        <div class="subsection">
+            <h3 style="font-size: 15px; margin-bottom: 10px; color: var(--color-text);">EPT Approval (if Medium, High, Critical Risk Destinations)</h3>
+
+            <div class="form-group">
+                <label>Approved</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-wrapper">
+                        <input type="radio" id="eptApprovedYes" name="eptApproval" value="Yes">
+                        <label for="eptApprovedYes">Yes</label>
+                    </div>
+                    <div class="checkbox-wrapper">
+                        <input type="radio" id="eptApprovedNo" name="eptApproval" value="No">
+                        <label for="eptApprovedNo">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="eptComments">Comments</label>
+                <textarea id="eptComments" name="eptComments"></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="eptRepName">EPT Representative Name</label>
+                    <select id="eptRepName" name="eptRepName">
+                        <option value="">Select (if applicable)</option>
+                        <option value="EPT Rep 1">EPT Rep 1</option>
+                        <option value="EPT Rep 2">EPT Rep 2</option>
+                        <option value="EPT Rep 3">EPT Rep 3</option>
+                        <option value="EPT Rep 4">EPT Rep 4</option>
+                        <option value="EPT Rep 5">EPT Rep 5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="eptSignature">EPT Representative Signature</label>
+                    <input type="text" id="eptSignature" name="eptSignature" placeholder="Type name to sign">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="eptApprovalDate">Date</label>
+                <input type="date" id="eptApprovalDate" name="eptApprovalDate">
+            </div>
+        </div>
+
+        <!-- 2. RISK ASSESSMENT -->
+        <div class="section-header">2. Risk Assessment</div>
+
+        <div class="form-group">
+            <label for="riskLevel">Destination Risk Level (from Regional Risk Table, Appendix 1)</label>
+            <select id="riskLevel" name="riskLevel">
+                <option value="">Select Level</option>
+                <option value="1">Level 1 (Low)</option>
+                <option value="2">Level 2 (Moderate)</option>
+                <option value="3">Level 3 (Medium)</option>
+                <option value="4">Level 4 (High)</option>
+                <option value="5">Level 5 (Critical)</option>
+            </select>
+            <div class="helper-text">As per CHUBB assessments</div>
+        </div>
+
+        <div class="form-group">
+            <label>If Level 3-5: Detailed Risk Mitigation Plan attached compiled by traveler?</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="riskPlanAttached" name="riskPlanAttached" value="Yes">
+                    <label for="riskPlanAttached">Yes (Include: specific threats, mitigation measures, insurance coverage details, emergency contacts, contingency options)</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. TRAINING AND BRIEFINGS -->
+        <div class="section-header">3. Training and Briefings</div>
+
+        <div class="form-group">
+            <label>Mandatory Travel Security Training completed via CHUBB portal?</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="trainingCompleted" name="trainingCompleted" value="Yes">
+                    <label for="trainingCompleted">Yes</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="trainingDate">Training Completion Date</label>
+            <input type="date" id="trainingDate" name="trainingDate">
+        </div>
+
+        <div class="form-group">
+            <label>Pre-Travel Briefing attended (required for Risk Level 3+)?</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="briefingYes" name="briefingAttended" value="Yes">
+                    <label for="briefingYes">Yes</label>
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="briefingNo" name="briefingAttended" value="No">
+                    <label for="briefingNo">No</label>
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="briefingNA" name="briefingAttended" value="N/A">
+                    <label for="briefingNA">N/A</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="briefingDate">Briefing Date</label>
+                <input type="date" id="briefingDate" name="briefingDate">
+            </div>
+            <div class="form-group">
+                <label for="briefingProvider">Provider/Conducted by</label>
+                <input type="text" id="briefingProvider" name="briefingProvider">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Topics covered:</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="topicCultural" name="topicCultural" value="Cultural awareness">
+                    <label for="topicCultural">Cultural awareness</label>
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="topicLaws" name="topicLaws" value="Local laws">
+                    <label for="topicLaws">Local laws</label>
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="topicHealth" name="topicHealth" value="Health precautions">
+                    <label for="topicHealth">Health precautions</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. HEALTH AND VACCINATIONS -->
+        <div class="section-header">4. Health and Vaccinations</div>
+
+        <div class="form-group">
+            <label>Required vaccinations/medications obtained (per CDC/WHO/destination requirements)?</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="vaccinationsObtained" name="vaccinationsObtained" value="Yes">
+                    <label for="vaccinationsObtained">Yes</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="vaccinationsList">List of vaccinations/medications</label>
+            <textarea id="vaccinationsList" name="vaccinationsList"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Personal medical kit prepared (includes prescriptions, first aid)?</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="medicalKitPrepared" name="medicalKitPrepared" value="Yes">
+                    <label for="medicalKitPrepared">Yes</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>International health insurance coverage confirmed (valid for entire trip duration)?</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="healthInsuranceConfirmed" name="healthInsuranceConfirmed" value="Yes">
+                    <label for="healthInsuranceConfirmed">Yes</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="healthInsuranceProvider">Provider/Policy #</label>
+            <input type="text" id="healthInsuranceProvider" name="healthInsuranceProvider">
+        </div>
+
+        <!-- 5. DOCUMENTATION -->
+        <div class="section-header">5. Documentation</div>
+
+        <div class="form-group">
+            <label>Passport valid for at least 6 months beyond return date / adequate pages?</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="passportValid" name="passportValid" value="Yes">
+                    <label for="passportValid">Yes</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="passportExpiration">Passport Expiration Date</label>
+            <input type="date" id="passportExpiration" name="passportExpiration">
+        </div>
+
+        <div class="form-group">
+            <label>Visas secured (if required)?</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="visaYes" name="visaSecured" value="Yes">
+                    <label for="visaYes">Yes</label>
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="visaNo" name="visaSecured" value="No">
+                    <label for="visaNo">No</label>
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="visaNA" name="visaSecured" value="N/A">
+                    <label for="visaNA">N/A</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="visaList">Visa List</label>
+            <input type="text" id="visaList" name="visaList">
+        </div>
+
+        <div class="form-group">
+            <label>Copies of important documents (passport, visa, insurance, itinerary) prepared and shared?</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="documentsCopied" name="documentsCopied" value="Yes">
+                    <label for="documentsCopied">Yes</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Registered with government travel advisory program (e.g., STEP for U.S. citizens)?</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="govRegistered" name="govRegistered" value="Yes">
+                    <label for="govRegistered">Yes</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="govRegistrationNum">Registration #</label>
+            <input type="text" id="govRegistrationNum" name="govRegistrationNum">
+        </div>
+
+        <div class="form-group">
+            <label>Registered with MSI company travel tracking system?</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="msiRegistered" name="msiRegistered" value="Yes">
+                    <label for="msiRegistered">Yes</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. COMMUNICATION SETUP -->
+        <div class="section-header">6. Communication Setup</div>
+
+        <div class="form-group">
+            <label>Company-approved CHUBB travel app installed and configured?</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="chubbAppInstalled" name="chubbAppInstalled" value="Yes">
+                    <label for="chubbAppInstalled">Yes</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="emergencyContactName">Itinerary and emergency contacts shared with designated contact (name/relation)</label>
+                <input type="text" id="emergencyContactName" name="emergencyContactName" placeholder="Name and relation">
+            </div>
+            <div class="form-group">
+                <label for="emergencyContactInfo">Contact Phone/Email</label>
+                <input type="text" id="emergencyContactInfo" name="emergencyContactInfo">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Emergency check-in procedure understood?</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="emergencyProcedureUnderstood" name="emergencyProcedureUnderstood" value="Yes">
+                    <label for="emergencyProcedureUnderstood">Yes</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. COMPANY EQUIPMENT AND DATA SECURITY -->
+        <div class="section-header">7. Company Equipment and Data Security</div>
+
+        <div class="form-group">
+            <label>Company laptop/phone/other equipment to be taken?</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="equipmentYes" name="equipmentTaken" value="Yes">
+                    <label for="equipmentYes">Yes</label>
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="equipmentNo" name="equipmentTaken" value="No">
+                    <label for="equipmentNo">No</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>If Yes: Devices encrypted, VPN configured, data backup completed?</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="devicesSecured" name="devicesSecured" value="Yes">
+                    <label for="devicesSecured">Yes</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Cybersecurity briefing for international travel completed (if applicable)?</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="cyberBriefYes" name="cyberBriefing" value="Yes">
+                    <label for="cyberBriefYes">Yes</label>
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="cyberBriefNA" name="cyberBriefing" value="N/A">
+                    <label for="cyberBriefNA">N/A</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. TRAVEL INSURANCE AND EMERGENCY COVERAGE -->
+        <div class="section-header">8. Travel Insurance and Emergency Coverage</div>
+
+        <div class="form-group">
+            <label>Company-provided travel insurance activated?</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="companyInsuranceActivated" name="companyInsuranceActivated" value="Yes">
+                    <label for="companyInsuranceActivated">Yes</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="companyInsuranceDetails">Policy details</label>
+            <input type="text" id="companyInsuranceDetails" name="companyInsuranceDetails">
+        </div>
+
+        <div class="form-group">
+            <label>Personal supplemental insurance (if desired)</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="personalInsurance" name="personalInsurance" value="Yes">
+                    <label for="personalInsurance">Yes</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="personalInsuranceProvider">Provider</label>
+            <input type="text" id="personalInsuranceProvider" name="personalInsuranceProvider">
+        </div>
+
+        <!-- 9. ACKNOWLEDGMENT AND CERTIFICATION -->
+        <div class="section-header">9. Acknowledgment and Certification</div>
+
+        <div class="form-group">
+            <p style="margin-bottom: 12px; font-size: 13px; line-height: 1.6;">
+                I certify that the information provided is accurate and complete. I have read and agree to comply with MSI's Travel Policy, 
+                including all risk mitigation, security, health, and reporting requirements. I understand that failure to comply may result 
+                in denial of reimbursement or disciplinary action.
+            </p>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="employeeCertification" name="employeeCertification" value="Yes">
+                    <label for="employeeCertification">I acknowledge and agree to the above</label>
+                </div>
+            </div>
+            <div class="error-message" data-error-for="employeeCertification">You must acknowledge this certification</div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="employeeSignature">Employee Signature</label>
+                <input type="text" id="employeeSignature" name="employeeSignature" placeholder="Type your full name">
+                <div class="error-message">Please sign by typing your name</div>
+            </div>
+            <div class="form-group">
+                <label for="employeeSignatureDate">Date</label>
+                <input type="date" id="employeeSignatureDate" name="employeeSignatureDate">
+                <div class="error-message">Please select date</div>
+            </div>
+        </div>
+
+        <!-- FINAL APPROVALS & ROUTING -->
+        <div class="section-header">Final Approvals &amp; Routing</div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="hrReview">HR / Travel Coordinator Review (if required)</label>
+                <input type="text" id="hrReview" name="hrReview">
+            </div>
+            <div class="form-group">
+                <label for="hrReviewDate">Date</label>
+                <input type="date" id="hrReviewDate" name="hrReviewDate">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Approved for Booking/Travel</label>
+            <div class="checkbox-group">
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="finalApprovedYes" name="finalApproval" value="Yes">
+                    <label for="finalApprovedYes">Yes</label>
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="radio" id="finalApprovedNo" name="finalApproval" value="No">
+                    <label for="finalApprovedNo">No</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="finalComments">Final Comments</label>
+            <textarea id="finalComments" name="finalComments"></textarea>
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="button-group">
+            <button type="submit" class="btn-primary">Generate PDF Document</button>
+            <button type="button" class="btn-secondary" onclick="resetForm()">Clear Form</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    const form = document.getElementById('travelForm');
+    const successMessage = document.getElementById('successMessage');
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const data = collectFormData();
+
+        successMessage.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        generatePrintableDocument(data);
+        console.log('Travel Request Data:', data);
+
+        setTimeout(() => {
+            successMessage.style.display = 'none';
+        }, 3000);
+    });
+
+    function clearErrors() {
+        document.querySelectorAll('.form-group.error').forEach(g => g.classList.remove('error'));
+        document.querySelectorAll('.error-message[data-error-for]').forEach(e => e.style.display = 'none');
+    }
+
+    function collectFormData() {
+        const getVal = id => document.getElementById(id)?.value || '';
+        const getChk = name => {
+            const el = document.querySelector('input[name="' + name + '"]:checked');
+            return el ? el.value : '';
+        };
+        const getChkVal = id => document.getElementById(id)?.checked ? 'Yes' : 'No';
+
+        return {
+            employeeName: getVal('employeeName'),
+            employeeId: getVal('employeeId'),
+            department: getVal('department'),
+            title: getVal('title'),
+            managerName: getVal('managerName'),
+            officePhone: getVal('officePhone'),
+            mobilePhone: getVal('mobilePhone'),
+            msiEmail: getVal('msiEmail'),
+            travelType: getChk('travelType'),
+            destination: getVal('destination'),
+            purpose: getVal('purpose'),
+            withCoworkers: getChk('withCoworkers'),
+            coworkerNames: getVal('coworkerNames'),
+            clientName: getVal('clientName'),
+            projectName: getVal('projectName'),
+            departureDate: getVal('departureDate'),
+            returnDate: getVal('returnDate'),
+            durationDays: getVal('durationDays'),
+            itinerarySummary: getVal('itinerarySummary'),
+            costAirfare: getVal('costAirfare'),
+            costLodging: getVal('costLodging'),
+            costMeals: getVal('costMeals'),
+            costOther: getVal('costOther'),
+            costTotal: getVal('costTotal'),
+            advanceNotice: getChk('advanceNotice'),
+            highRisk: getChk('highRisk'),
+            managerApproval: getChk('managerApproval'),
+            managerComments: getVal('managerComments'),
+            managerSignature: getVal('managerSignature'),
+            managerApprovalDate: getVal('managerApprovalDate'),
+            seniorApproval: getChk('seniorApproval'),
+            seniorComments: getVal('seniorComments'),
+            seniorMgmtName: getVal('seniorMgmtName'),
+            seniorSignature: getVal('seniorSignature'),
+            seniorApprovalDate: getVal('seniorApprovalDate'),
+            eptApproval: getChk('eptApproval'),
+            eptComments: getVal('eptComments'),
+            eptRepName: getVal('eptRepName'),
+            eptSignature: getVal('eptSignature'),
+            eptApprovalDate: getVal('eptApprovalDate'),
+            riskLevel: getVal('riskLevel'),
+            riskPlanAttached: getChkVal('riskPlanAttached'),
+            trainingCompleted: getChkVal('trainingCompleted'),
+            trainingDate: getVal('trainingDate'),
+            briefingAttended: getChk('briefingAttended'),
+            briefingDate: getVal('briefingDate'),
+            briefingProvider: getVal('briefingProvider'),
+            vaccinationsObtained: getChkVal('vaccinationsObtained'),
+            vaccinationsList: getVal('vaccinationsList'),
+            medicalKitPrepared: getChkVal('medicalKitPrepared'),
+            healthInsuranceConfirmed: getChkVal('healthInsuranceConfirmed'),
+            healthInsuranceProvider: getVal('healthInsuranceProvider'),
+            passportValid: getChkVal('passportValid'),
+            passportExpiration: getVal('passportExpiration'),
+            visaSecured: getChk('visaSecured'),
+            visaList: getVal('visaList'),
+            documentsCopied: getChkVal('documentsCopied'),
+            govRegistered: getChkVal('govRegistered'),
+            govRegistrationNum: getVal('govRegistrationNum'),
+            msiRegistered: getChkVal('msiRegistered'),
+            chubbAppInstalled: getChkVal('chubbAppInstalled'),
+            emergencyContactName: getVal('emergencyContactName'),
+            emergencyContactInfo: getVal('emergencyContactInfo'),
+            emergencyProcedureUnderstood: getChkVal('emergencyProcedureUnderstood'),
+            equipmentTaken: getChk('equipmentTaken'),
+            devicesSecured: getChkVal('devicesSecured'),
+            cyberBriefing: getChk('cyberBriefing'),
+            companyInsuranceActivated: getChkVal('companyInsuranceActivated'),
+            companyInsuranceDetails: getVal('companyInsuranceDetails'),
+            personalInsurance: getChkVal('personalInsurance'),
+            personalInsuranceProvider: getVal('personalInsuranceProvider'),
+            employeeCertification: getChkVal('employeeCertification'),
+            employeeSignature: getVal('employeeSignature'),
+            employeeSignatureDate: getVal('employeeSignatureDate'),
+            hrReview: getVal('hrReview'),
+            hrReviewDate: getVal('hrReviewDate'),
+            finalApproval: getChk('finalApproval'),
+            finalComments: getVal('finalComments'),
+            submittedAt: new Date().toLocaleString()
+        };
+    }
+
+    function generatePrintableDocument(d) {
+        const w = window.open('', '_blank');
+        if (!w) {
+            alert('Popup was blocked by your browser. Please allow popups for this site.');
+            return;
+        }
+
+        w.document.open();
+        w.document.write(
+            '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>MSI Travel Request - ' +
+            (d.employeeName || 'Request') +
+            '</title><style>' +
+            'body{font-family:Segoe UI,Arial,sans-serif;font-size:11pt;line-height:1.6;margin:0;padding:0.5in;max-width:8.5in;color:#323130}' +
+            'h1{color:#0078d4;font-size:20pt;margin:0 0 5px}h2{font-size:16pt;margin:5px 0;color:#323130}' +
+            '.header{text-align:center;border-bottom:3px solid #0078d4;padding-bottom:10px;margin-bottom:20px}' +
+            '.section-title{background:#0078d4;color:#fff;padding:6px 10px;font-size:12pt;font-weight:600;margin:12px 0 8px}' +
+            '.section{margin-bottom:18px;page-break-inside:avoid}' +
+            '.field-row{display:flex;margin-bottom:6px}.field-label{min-width:200px;font-weight:600;color:#605e5c}.field-value{flex:1}' +
+            '.footer{margin-top:30px;padding-top:10px;border-top:2px solid #edebe9;font-size:9pt;color:#605e5c;text-align:center}' +
+            '.no-print{position:fixed;top:20px;right:20px;padding:8px 16px;background:#0078d4;color:#fff;border:none;border-radius:4px;cursor:pointer;font-weight:600}' +
+            '@media print{body{margin:0}.no-print{display:none}}' +
+            '</style></head><body>' +
+            '<button class="no-print" onclick="window.print()">Print / Save PDF</button>' +
+            '<div class="header">' +
+                '<h1>MARKING SERVICES INC. (MSI)</h1>' +
+                '<h2>Travel Request Form</h2>' +
+                '<div style="font-size:9pt;color:#605e5c;">Effective Date: 16 March 2026 | Form Version: 1.0</div>' +
+                '<div style="font-size:9pt;color:#605e5c;">Generated: ' + (d.submittedAt || '') + '</div>' +
+            '</div>' +
+
+            '<div class="section-title">Employee Information</div>' +
+            '<div class="section">' +
+                '<div class="field-row"><div class="field-label">Employee Name:</div><div class="field-value">' + (d.employeeName || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Employee ID/Number:</div><div class="field-value">' + (d.employeeId || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Department/Team:</div><div class="field-value">' + (d.department || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Position/Title:</div><div class="field-value">' + (d.title || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Manager/Supervisor Name:</div><div class="field-value">' + (d.managerName || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Company/Office Phone:</div><div class="field-value">' + (d.officePhone || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Mobile Phone:</div><div class="field-value">' + (d.mobilePhone || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">MSI Email:</div><div class="field-value">' + (d.msiEmail || '') + '</div></div>' +
+            '</div>' +
+
+            '<div class="section-title">Travel Details</div>' +
+            '<div class="section">' +
+                '<div class="field-row"><div class="field-label">Type of Travel:</div><div class="field-value">' + (d.travelType || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Destination(s):</div><div class="field-value">' + (d.destination || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Purpose of Travel:</div><div class="field-value">' + (d.purpose || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Traveling with Co-Worker(s):</div><div class="field-value">' + (d.withCoworkers || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Name of Co-Worker(s):</div><div class="field-value">' + (d.coworkerNames || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Client\'s Name:</div><div class="field-value">' + (d.clientName || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Project Name:</div><div class="field-value">' + (d.projectName || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Departure Date:</div><div class="field-value">' + (d.departureDate || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Return Date:</div><div class="field-value">' + (d.returnDate || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Total Estimated Duration:</div><div class="field-value">' + (d.durationDays || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Itinerary Summary:</div><div class="field-value">' + (d.itinerarySummary || '') + '</div></div>' +
+            '</div>' +
+
+            '<div class="section-title">Estimated Costs (USD)</div>' +
+            '<div class="section">' +
+                '<div class="field-row"><div class="field-label">Airfare/Transportation:</div><div class="field-value">$' + (d.costAirfare || '0.00') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Lodging:</div><div class="field-value">$' + (d.costLodging || '0.00') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Meals/Per Diem:</div><div class="field-value">$' + (d.costMeals || '0.00') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Other (visa, insurance, etc.):</div><div class="field-value">$' + (d.costOther || '0.00') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Total Estimated:</div><div class="field-value">$' + (d.costTotal || '0.00') + '</div></div>' +
+            '</div>' +
+
+            '<div class="section-title">Approvals & Other Details</div>' +
+            '<div class="section">' +
+                '<div class="field-row"><div class="field-label">Advance Notice:</div><div class="field-value">' + (d.advanceNotice || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">High Risk Destination:</div><div class="field-value">' + (d.highRisk || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Manager Approval:</div><div class="field-value">' + (d.managerApproval || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Manager Comments:</div><div class="field-value">' + (d.managerComments || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Senior Approval:</div><div class="field-value">' + (d.seniorApproval || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">EPT Approval:</div><div class="field-value">' + (d.eptApproval || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Risk Level:</div><div class="field-value">' + (d.riskLevel || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Training Completed:</div><div class="field-value">' + (d.trainingCompleted || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Vaccinations Obtained:</div><div class="field-value">' + (d.vaccinationsObtained || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Employee Certification:</div><div class="field-value">' + (d.employeeCertification || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Employee Signature:</div><div class="field-value">' + (d.employeeSignature || '') + '</div></div>' +
+                '<div class="field-row"><div class="field-label">Signature Date:</div><div class="field-value">' + (d.employeeSignatureDate || '') + '</div></div>' +
+            '</div>' +
+
+            '<div class="footer">Post-travel expense report due within 10 business days of return.</div>' +
+            '</body></html>'
+        );
+        w.document.close();
+    }
+
+    function resetForm() {
+        if (confirm('Clear all form data? This cannot be undone.')) {
+            form.reset();
+            clearErrors();
+            successMessage.style.display = 'none';
+        }
+    }
+
+    document.querySelectorAll('input, select, textarea').forEach(field => {
+        field.addEventListener('input', function () {
+            const group = this.closest('.form-group');
+            if (group) group.classList.remove('error');
+        });
+    });
+
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('departureDate').setAttribute('min', today);
+    document.getElementById('returnDate').setAttribute('min', today);
+    document.getElementById('departureDate').addEventListener('change', function () {
+        document.getElementById('returnDate').setAttribute('min', this.value);
+    });
+</script>
+</body>
+</html>
